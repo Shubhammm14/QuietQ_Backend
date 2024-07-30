@@ -1,15 +1,6 @@
 package com.exaple.quiet_Q.modal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,46 +17,46 @@ public class User {
     private String profileImg;
     private String idDescription;
     private String currentId;
-    private String password; // New field for password
+    private String password;
     private LocalDateTime lastLogin;
     private LocalDateTime createdAt;
-    private LocalDateTime lastUpdate; // Field to track last update time
-    private String gender; // New field for gender
+    private LocalDateTime lastUpdate;
+    private String gender;
+
     @ElementCollection
     private List<String> tags;
 
-
     // Default constructor
     public User() {
-        this.currentId = UUID.randomUUID().toString(); // Initialize currentId
-        this.createdAt = LocalDateTime.now(); // Set createdAt to current time
-        this.lastUpdate = LocalDateTime.now(); // Set lastUpdate to current time
+        this.currentId = UUID.randomUUID().toString();
+        this.createdAt = LocalDateTime.now();
+        this.lastUpdate = LocalDateTime.now();
     }
 
-    // Parameterized constructor
+    // Parameterized constructors
+    public User(String aliasName, String email, String idDescription, String password, String gender, List<String> tags) {
+        this.aliasName = aliasName;
+        this.email = email;
+        this.idDescription = idDescription;
+        this.password = password;
+        this.gender = gender;
+        this.currentId = UUID.randomUUID().toString();
+        this.createdAt = LocalDateTime.now();
+        this.lastUpdate = LocalDateTime.now();
+        this.tags = tags;
+    }
+
     public User(String aliasName, String email, String profileImg, String idDescription, String currentId, String password, LocalDateTime lastLogin, LocalDateTime createdAt, LocalDateTime lastUpdate, String gender, List<String> tags) {
         this.aliasName = aliasName;
         this.email = email;
         this.profileImg = profileImg;
         this.idDescription = idDescription;
-        this.currentId = currentId != null ? currentId : UUID.randomUUID().toString(); // Initialize currentId if not provided
-        this.password = password; // Set password
+        this.currentId = currentId != null ? currentId : UUID.randomUUID().toString();
+        this.password = password;
         this.lastLogin = lastLogin;
-        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now(); // Initialize createdAt if not provided
-        this.lastUpdate = lastUpdate != null ? lastUpdate : LocalDateTime.now(); // Initialize lastUpdate if not provided
-        this.gender = gender; // Set gender
-        this.tags = tags;
-    }
-
-    public User(String aliasName, String email, String idDescription, String password, String gender, List<String> tags) {
-        this.aliasName = aliasName;
-        this.email = email;
-        this.idDescription = idDescription;
-        this.password = password; // Set password
-        this.gender = gender; // Set gender
-        this.currentId = UUID.randomUUID().toString(); // Initialize currentId
-        this.createdAt = LocalDateTime.now(); // Set createdAt to current time
-        this.lastUpdate = LocalDateTime.now(); // Set lastUpdate to current time
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.lastUpdate = lastUpdate != null ? lastUpdate : LocalDateTime.now();
+        this.gender = gender;
         this.tags = tags;
     }
 
@@ -166,7 +157,6 @@ public class User {
         this.tags = tags;
     }
 
-    // Override toString method
     @Override
     public String toString() {
         return "User{" +

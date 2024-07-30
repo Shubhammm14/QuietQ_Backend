@@ -12,7 +12,7 @@ public class Message {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "chat_id", nullable = false)
+    @JoinColumn(name = "chat_id", referencedColumnName = "id", nullable = false)
     private Chat chat;
 
     @ManyToOne
@@ -23,19 +23,21 @@ public class Message {
     private String video;
     private LocalDateTime timeStamp;
 
-    public Message() {
-    }
+    // Default constructor
+    public Message() {}
 
-    public Message(Long id, String content, User user, Chat chat, String image, String video, LocalDateTime timeStamp) {
+    // Parameterized constructor
+    public Message(Long id, String content, Chat chat, User user, String image, String video, LocalDateTime timeStamp) {
         this.id = id;
         this.content = content;
-        this.user = user;
         this.chat = chat;
+        this.user = user;
         this.image = image;
         this.video = video;
         this.timeStamp = timeStamp;
     }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -52,20 +54,20 @@ public class Message {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Chat getChat() {
         return chat;
     }
 
     public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getImage() {
@@ -90,5 +92,18 @@ public class Message {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", chat=" + chat +
+                ", user=" + user +
+                ", image='" + image + '\'' +
+                ", video='" + video + '\'' +
+                ", timeStamp=" + timeStamp +
+                '}';
     }
 }
