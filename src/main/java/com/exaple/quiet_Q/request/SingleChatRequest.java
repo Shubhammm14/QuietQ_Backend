@@ -1,27 +1,27 @@
 package com.exaple.quiet_Q.request;
 
 public class SingleChatRequest {
-    private Long userId;
+    private Long id;
 
     @Override
     public String toString() {
         return "SingleChatRequest{" +
-                "userId=" + userId +
+                "userId=" + id +
                 '}';
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public SingleChatRequest() {
     }
 
-    public SingleChatRequest(Long userId) {
-        this.userId = userId;
+    public SingleChatRequest(Long id) {
+        this.id = id;
     }
 }

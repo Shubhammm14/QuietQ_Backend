@@ -1,8 +1,13 @@
 package com.exaple.quiet_Q.modal;
 
-import com.exaple.quiet_Q.modal.Post;
-import com.exaple.quiet_Q.modal.User;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,25 +16,15 @@ public class Community {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
 
-    private String communityName;
+    @OneToMany(mappedBy = "community")
+    @JsonIgnore
+    private List<Post> posts;
 
-    @ManyToMany
-    private List<User> users = new ArrayList<>();
 
-    @OneToMany
-    private List<Post> posts = new ArrayList<>();
 
-    public Community() {
-    }
-
-    public Community(Long id, String communityName, List<User> users, List<Post> posts) {
-        this.id = id;
-        this.communityName = communityName;
-        this.users = users;
-        this.posts = posts;
-    }
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -38,24 +33,25 @@ public class Community {
         this.id = id;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public String getName() {
+        return name;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Post> getPosts() {
         return posts;
+    }
+
+    public Community(Long id, String name, List<Post> posts) {
+        this.id = id;
+        this.name = name;
+        this.posts = posts;
+    }
+
+    public Community() {
     }
 
     public void setPosts(List<Post> posts) {

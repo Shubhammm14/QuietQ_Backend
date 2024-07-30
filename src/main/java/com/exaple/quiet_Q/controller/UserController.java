@@ -80,7 +80,7 @@ public class UserController {
     }
 
     @GetMapping("/search/users")
-    public ResponseEntity<List<User>> searchUsersByTags(@RequestParam List<String> tags) {
+    public ResponseEntity<List<User>> searchUsersByTags(@RequestBody List<String> tags) {
         try {
             List<User> users = userService.searchUserByTag(tags);
             if (users != null && !users.isEmpty()) {

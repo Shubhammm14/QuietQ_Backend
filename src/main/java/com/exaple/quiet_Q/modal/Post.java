@@ -1,9 +1,12 @@
 package com.exaple.quiet_Q.modal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,20 +14,18 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long chatId;
-    private Long communityId;
-    private LocalDateTime localDateTime;
 
-    public Post() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;  // Reference to Chat entity
 
-    public Post(Long id, Long chatId, Long communityId, LocalDateTime localDateTime) {
-        this.id = id;
-        this.chatId = chatId;
-        this.communityId = communityId;
-        this.localDateTime = localDateTime;
-    }
+    @ManyToOne
+    @JoinColumn(name = "community_id")
+    private Community community;
 
+    private LocalDateTime createdAt;
+
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -33,27 +34,27 @@ public class Post {
         this.id = id;
     }
 
-    public Long getChatId() {
-        return chatId;
+    public Chat getChat() {
+        return chat;
     }
 
-    public void setChatId(Long chatId) {
-        this.chatId = chatId;
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
-    public Long getCommunityId() {
-        return communityId;
+    public Community getCommunity() {
+        return community;
     }
 
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

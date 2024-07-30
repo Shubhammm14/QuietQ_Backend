@@ -37,6 +37,8 @@ public class ChatServiceImpl implements ChatService {
     public Chat createChat(User reqUser, Long userId2) throws UserExcepition {
         try {
             User user = userService.findUserById(userId2);
+            //System.out.print(user+" /n "+ reqUser);
+
             Chat isChatExists = findSingleChatByUserIds(reqUser.getId(), user.getId());
             if (isChatExists != null) {
                 // chat exists so return the chat
@@ -49,9 +51,10 @@ public class ChatServiceImpl implements ChatService {
             chat.setGroup(false);
             chat.setTimestamp(LocalDateTime.now());
 
+
             return chatRepository.save(chat);
         } catch (Exception e) {
-            throw new UserExcepition("Error creating chat");
+            throw new UserExcepition("Error creating chat"+e);
         }
     }
 
@@ -180,7 +183,8 @@ public class ChatServiceImpl implements ChatService {
             if (chat != null) {
                 return chat;
             } else {
-                throw new ChatException("No chat found between users with ids " + userId1 + " and " + userId2);
+                return null;
+                //throw new ChatException("No chat found between users with ids " + userId1 + " and " + userId2);
             }
         } catch (Exception e) {
             throw new ChatException("Error finding chat by user ids");
@@ -197,6 +201,18 @@ public class ChatServiceImpl implements ChatService {
         LocalDateTime cutoffTime = LocalDateTime.now().minusHours(24);
         List<Chat> expiredChats = findChatsOlderThan(cutoffTime);
         chatRepository.deleteAll(expiredChats);
+    }
+    @Override
+    public Chat addTagsToChat(Long chatId, List<String> tags) {
+        Chat chat = chatRepository.findById(chatId).orElseThrow(() -> new RuntimeException("Chat not found"));
+        if (chat.isGroup()) {
+            List<String> currentTags = chat.getTags();
+            currentTags.addAll(tags);
+            chat.setTags(currentTags);
+            return chatRepository.save(chat);
+        } else {
+            throw new RuntimeException("Cannot add tags to a non-group chat");
+        }
     }
     @Override
     public List<User> findTenRandomUsersNotInChat(Long userId) throws ExecutionControl.UserException {

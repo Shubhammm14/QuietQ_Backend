@@ -30,5 +30,7 @@ public interface ChatService {
 
     //User findRandomUserNotInChat(Long userId) throws ExecutionControl.UserException, ExecutionControl.UserException;
 
+    Chat addTagsToChat(Long chatId, List<String> tags);
+
     List<User> findTenRandomUsersNotInChat(Long userId) throws ExecutionControl.UserException;
 }
